@@ -1,0 +1,250 @@
+enter file contents here
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>unfoorgettablee</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080608;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 64px;
+      background: #0e0b0e;
+      border-bottom: 1px solid #282027;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: #f7b6d2;
+      letter-spacing: 0.5px;
+    }
+
+    .room {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .room span {
+      color: #f7b6d2;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+    }
+
+    .empty-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: #191319;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .empty h2 {
+      color: #ddd;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .empty p {
+      font-size: 13px;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(18, 14, 18, 0.95);
+      border: 1px solid #302630;
+      border-radius: 18px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.4);
+    }
+
+    .control {
+      width: 54px;
+      height: 54px;
+      border: none;
+      border-radius: 15px;
+      background: #211b21;
+      color: #f7b6d2;
+      font-size: 21px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .control:hover {
+      background: #f7b6d2;
+      color: #100b0e;
+      transform: translateY(-2px);
+    }
+
+    .control.leave {
+      color: #ff7d9e;
+    }
+
+    .control.leave:hover {
+      background: #ff7d9e;
+      color: #12090c;
+    }
+
+    .status {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: #151015;
+      border: 1px solid #2b222b;
+      border-radius: 20px;
+      padding: 8px 13px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .status::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f7b6d2;
+      margin-right: 7px;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .controls {
+        bottom: 18px;
+      }
+
+      .control {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+      <div class="logo">unfoorgettablee</div>
+      <div class="room">Sala: <span>geral</span></div>
+    </header>
+
+    <main class="content">
+
+      <div class="status">Conectado</div>
+
+      <div class="empty">
+        <div class="empty-icon">♡</div>
+        <h2>Bem-vindo à sala</h2>
+        <p>Você está conectado ao unfoorgettablee.</p>
+      </div>
+
+      <div class="controls">
+
+        <button class="control" title="Microfone" onclick="toggleMic(this)">
+          🎤
+        </button>
+
+        <button class="control" title="Câmera" onclick="toggleCamera(this)">
+          📹
+        </button>
+
+        <button class="control" title="Transmitir tela" onclick="shareScreen()">
+          🖥️
+        </button>
+
+        <button class="control leave" title="Sair da sala" onclick="leaveRoom()">
+          🚪
+        </button>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    function toggleMic(button) {
+      button.style.opacity = button.style.opacity === "0.45" ? "1" : "0.45";
+    }
+
+    function toggleCamera(button) {
+      button.style.opacity = button.style.opacity === "0.45" ? "1" : "0.45";
+    }
+
+    async function shareScreen() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+        alert("Seu navegador não permite transmissão de tela.");
+        return;
+      }
+
+      try {
+        await navigator.mediaDevices.getDisplayMedia({
+          video: true
+        });
+      } catch (error) {
+        console.log("Transmissão cancelada.");
+      }
+    }
+
+    function leaveRoom() {
+      if (confirm("Deseja realmente sair da sala?")) {
+        window.location.href = "index.html";
+      }
+    }
+  </script>
+
+</body>
+</html>[
