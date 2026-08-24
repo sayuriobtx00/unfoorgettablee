@@ -220,8 +220,44 @@ enter file contents here
       button.style.opacity = button.style.opacity === "0.45" ? "1" : "0.45";
     }
 
-    function toggleCamera(button) {
-      button.style.opacity = button.style.opacity === "0.45" ? "1" : "0.45";
+ let cameraStream = null;
+
+async function toggleCamera(button) {
+    if (!cameraStream) {
+        try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+
+            const video = document.createElement("video");
+            video.id = "cameraPreview";
+            video.srcObject = cameraStream;
+            video.autoplay = true;
+            video.muted = true;
+
+            video.style.position = "fixed";
+            video.style.bottom = "100px";
+            video.style.right = "20px";
+            video.style.width = "250px";
+            video.style.borderRadius = "12px";
+
+            document.body.appendChild(video);
+
+            button.style.opacity = "1";
+        } catch (error) {
+            alert("Não foi possível acessar a câmera.");
+            console.error(error);
+        }
+    } else {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+
+        const video = document.getElementById("cameraPreview");
+        if (video) video.remove();
+
+        button.style.opacity = "0.45";
+    }
+}
     }
 
     async function shareScreen() {
